@@ -1,4 +1,6 @@
 /*
+https://github.com/wxarmstrong/2020_FindSum
+
 William Armstrong
 CS 3310
 Cal Poly Pomona
