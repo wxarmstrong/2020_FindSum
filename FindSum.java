@@ -133,8 +133,8 @@ import java.util.concurrent.TimeUnit;
 
 class FindSum  
 { 
-	public static final int[] SIZES = {100};
-	public static int ITERATIONS = 1;
+	public static final int[] SIZES = {100,1000,100000,1000000};
+	public static int ITERATIONS = 10000;
 	public static int INT_MINIMUM = -100;
 	public static int INT_MAXIMUM = 100;
 	
@@ -285,13 +285,11 @@ class FindSum
 			long totalTime_pincer_sorted = 0;
 			for (int j=0; j<ITERATIONS; j++)
 			{
-				System.out.println();
 				int[] arr = new int[curSize];
 				for (int k=0; k<curSize; k++)
 					arr[k] = rand.nextInt(201) - 100;
 				int sum = rand.nextInt(401) - 200;
-				printArray(arr);
-				System.out.println("Target sum: " + sum);
+				
 				long startTime, endTime;
 				int[] solution1;
 				int[] solution2;
@@ -304,19 +302,16 @@ class FindSum
 				solution1 = bruteForce_unsorted(arr, sum);
 				endTime = System.nanoTime();
 				totalTime_brute_unsorted += (endTime - startTime);
-				System.out.println("Solution 1 (brute force): " + arr[solution1[0]] + " + " + arr[solution1[1]] + " = " + sum);
 				
 				startTime = System.nanoTime();
 				solution2 = bruteForce_minMax_unsorted(arr, sum);
 				endTime = System.nanoTime();
 				totalTime_brute_minmax_unsorted += (endTime - startTime);
-				System.out.println("Solution 2 (brute force w/ MinMax): " + arr[solution2[0]] + " + " + arr[solution2[1]] + " = " + sum);
 				
 				startTime = System.nanoTime();
 				solution3 = lookupTable_unsorted(arr, sum);
 				endTime = System.nanoTime();
 				totalTime_smart_unsorted += (endTime - startTime);
-				System.out.println("Solution 3 (table lookup): " + arr[solution3[0]] + " + " + arr[solution3[1]] + " = " + sum);
 				
 				if (solution1[0] != -1 || solution2[0] != -1 || solution3[0] != -1)
 				{
@@ -333,23 +328,17 @@ class FindSum
 					}					
 				}
 				
-				System.out.println();
-				System.out.println("Now sorting the array:");
 				Arrays.sort(arr);
-				printArray(arr);
-				System.out.println("Target sum: " + sum);
 				
 				startTime = System.nanoTime();
 				solution4 = bruteForce_minMax_sorted(arr, sum);
 				endTime = System.nanoTime();
-				totalTime_brute_minmax_sorted += (endTime - startTime);	
-				System.out.println("Solution 4 (brute force): " + arr[solution4[0]] + " + " + arr[solution4[1]] + " = " + sum);				
+				totalTime_brute_minmax_sorted += (endTime - startTime);			
 
 				startTime = System.nanoTime();
 				solution5 = pincer_sorted(arr, sum);
 				endTime = System.nanoTime();
 				totalTime_pincer_sorted += (endTime - startTime);					
-				System.out.println("Solution 5 (pincer search): " + arr[solution5[0]] + " + " + arr[solution5[1]] + " = " + sum);	
 
 				if (solution4[0] != -1 || solution5[0] != -1)
 				{
@@ -363,8 +352,6 @@ class FindSum
 						throw new ArithmeticException("One or more of the algorithms gave an invalid solution");
 					}					
 				}
-				
-				System.out.println();
 				
 			}
 			System.out.println("UNSORTED:");
